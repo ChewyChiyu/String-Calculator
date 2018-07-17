@@ -12,7 +12,7 @@ public class Calculator {
 	Symbol[] SYMBOLS;
 
 	public static void main(String[] args){
-		new Calculator().calculate("5*3-sin(5+6)-12/13");
+		new Calculator().calculate("((3)+3/3-3)");
 	}
 
 	public Calculator(){
@@ -53,7 +53,7 @@ public class Calculator {
 				Symbol sym = Symbol.getSymbol(SYMBOLS, s);
 				if(sym.value>0){ // no special operation
 					if(!inputStack.isEmpty() && (inputStack.peek().compareTo(sym) < 0)){ 
-						while(!inputStack.isEmpty()){
+						while(!inputStack.isEmpty() && inputStack.peek().value > 0){
 							step();
 						}
 					}
@@ -121,7 +121,15 @@ public class Calculator {
 		}
 		outputStack.add(d3);
 	}
-
+	
+	public <T> void verbose(Stack<T> stack){
+		 Object[] d = stack.toArray();
+		 for(Object o : d){
+			 System.out.print(o);
+		 }
+		 System.out.println();
+	}
+	
 	public void parse(String equation){
 		String str = equation;
 		final String LIMITER = "~";
